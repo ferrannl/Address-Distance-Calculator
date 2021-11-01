@@ -1,0 +1,5 @@
+Postman:
+
+GET: https://localhost:[port]/api/Adresses
+
+DELETE: https://localhost:[port]/api/Adresses/[id]
