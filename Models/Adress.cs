@@ -7,6 +7,7 @@ namespace SocialBrothers.Models
 {
     public class Adress
     {
+        public int ID { get; set; }
         public string StreetName { get; set; }
         public int HouseNumber { get; set; }
         public string Zipcode { get; set; }

@@ -13,6 +13,6 @@ namespace SocialBrothers.Models
         {
         }
 
-        public DbSet<Adress> TodoItems { get; set; }
+        public DbSet<Adress> Adresses { get; set; }
     }
 }
