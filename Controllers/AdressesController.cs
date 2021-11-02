@@ -15,6 +15,7 @@ namespace SocialBrothers.Controllers
 {
 
     //https://localhost:44361/api/Adresses
+
     [Route("api/[controller]")]
     [ApiController]
     public class AdressesController : ControllerBase
@@ -31,7 +32,6 @@ namespace SocialBrothers.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Adress>>> GetAdresses()
         {
-            RunAsync().Wait();
 
             return await _context.Adresses.ToListAsync();
         }
@@ -113,70 +113,15 @@ namespace SocialBrothers.Controllers
             return _context.Adresses.Any(e => e.ID == id);
         }
 
-        static async Task RunAsync()
-        {
-            using (var client = new HttpClient())
-            {
-                string bingkey = "AsOwuPhU8FPK9TfxRKzV2wXAyywiAIM6fDnMlqNgTbQ-fWcUdVfZcr_FSkZGEeYv";
-                var addressLine = "Marskamersgilde";
-
-                //http://dev.virtualearth.net/REST/v1/Locations?countryRegion={countryRegion}&adminDistrict={adminDistrict}&locality={locality}&postalCode={postalCode}&addressLine={addressLine}&userLocation={userLocation}&userIp={userIp}&usermapView={usermapView}&includeNeighborhood={includeNeighborhood}&maxResults={maxResults}&key={BingMapsKey}
-
-                //TODO - send HTTP requests
-                client.BaseAddress = new Uri("http://dev.virtualearth.net/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //-----
-                HttpResponseMessage response = await client.GetAsync("REST/v1/Locations/" + addressLine + "/?o=json&key=" + bingkey);
-                double lat = 0;
-                double lon = 0;
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = response.Content.ReadAsStringAsync().Result;
-                    dynamic jsonObject = JsonConvert.DeserializeObject(json);
-                    if (jsonObject.resourceSets.Count > 0)
-                    {
-                        if (jsonObject.resourceSets[0].resources.Count > 0)
-                        {
-                            lat = jsonObject.resourceSets[0].resources[0].point.coordinates[0];
-                            lon = jsonObject.resourceSets[0].resources[0].point.coordinates[1];
-                        }
-                    }
-                }
-                Console.WriteLine(lat);
-                Console.WriteLine(lon);
-                Console.WriteLine("ewa");
-
-            }
-        }
-
-        private Location getLocation()
-        {
-            Location location = new Location();
-            var addressLine = "Marskramersgilde";
-            //var bingurl = "http://dev.virtualearth.net/REST/v1/Locations?addressLine=" + addressLine + "&key=" + bingkey;
-            location.Latitude = 12;
-            location.Longitude = 13;
-
-            return location;
-        }
-
-
-        //public double CalculateDistance(Location point1, Location point2)
-        //{
-        //    var d1 = point1.Latitude * (Math.PI / 180.0);
-        //    var num1 = point1.Longitude * (Math.PI / 180.0);
-        //    var d2 = point2.Latitude * (Math.PI / 180.0);
-        //    var num2 = point2.Longitude * (Math.PI / 180.0) - num1;
-        //    var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) +
-        //             Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
-        //    return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
-        //}
         public class Location
         {
-            public double Latitude { get; set; }
-            public double Longitude { get; set; }
+            public Location(double lat, double lon)
+            {
+                Lat = lat;
+                Lon = lon;
+            }
+            public double Lat { get; }
+            public double Lon { get; }
         }
 
     }
