@@ -3,3 +3,55 @@ Postman:
 GET: https://localhost:[port]/api/Adresses
 
 DELETE: https://localhost:[port]/api/Adresses/[id]
+
+"{\"authenticationResultCode\":\"ValidCredentials\",\"brandLogoUri\":\"http:\\/\\/dev.virtualearth.net\\/Branding\\/logo_powered_by.png\",\"copyright\":\"Copyright © 2021 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.\",\"resourceSets\":[{\"estimatedTotal\":1,\"resources\":[{\"__type\":\"Location:http:\\/\\/schemas.microsoft.com\\/search\\/local\\/ws\\/rest\\/v1\",\"bbox\":[52.030988182434925,5.16552099592931,52.038713617576278,5.1822635040542711],\"name\":\"Marskramersgilde, 3994 Houten, Netherlands\",\"point\":{\"type\":\"Point\",\"coordinates\":[52.0348509000056,5.17389224999179]},\"address\":{\"addressLine\":\"Marskramersgilde\",\"adminDistrict\":\"Utrecht\",\"adminDistrict2\":\"Gemeente Houten\",\"countryRegion\":\"Netherlands\",\"formattedAddress\":\"Marskramersgilde, 3994 Houten, Netherlands\",\"locality\":\"Houten\",\"postalCode\":\"3994\"},\"confidence\":\"Medium\",\"entityType\":\"RoadBlock\",\"geocodePoints\":[{\"type\":\"Point\",\"coordinates\":[52.0348509000056,5.17389224999179],\"calculationMethod\":\"Interpolation\",\"usageTypes\":[\"Display\"]}],\"matchCodes\":[\"Good\"]}]}],\"statusCode\":200,\"statusDescription\":\"OK\",\"traceId\":\"932ba9c0b6fd4fa8b5fef597c2331f18|DU0000274F|0.0.0.1|Ref A: 2B49AB526AFE4622849008F6853038B8 Ref B: DB3EDGE0812 Ref C: 2021-11-01T20:32:05Z\"}"
+
+{{
+  "estimatedTotal": 1,
+  "resources": [
+    {
+      "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+      "bbox": [
+        52.030988182434925,
+        5.16552099592931,
+        52.03871361757628,
+        5.182263504054271
+      ],
+      "name": "Marskramersgilde, 3994 Houten, Netherlands",
+      "point": {
+        "type": "Point",
+        "coordinates": [
+          52.0348509000056,
+          5.17389224999179
+        ]
+      },
+      "address": {
+        "addressLine": "Marskramersgilde",
+        "adminDistrict": "Utrecht",
+        "adminDistrict2": "Gemeente Houten",
+        "countryRegion": "Netherlands",
+        "formattedAddress": "Marskramersgilde, 3994 Houten, Netherlands",
+        "locality": "Houten",
+        "postalCode": "3994"
+      },
+      "confidence": "Medium",
+      "entityType": "RoadBlock",
+      "geocodePoints": [
+        {
+          "type": "Point",
+          "coordinates": [
+            52.0348509000056,
+            5.17389224999179
+          ],
+          "calculationMethod": "Interpolation",
+          "usageTypes": [
+            "Display"
+          ]
+        }
+      ],
+      "matchCodes": [
+        "Good"
+      ]
+    }
+  ]
+}}
