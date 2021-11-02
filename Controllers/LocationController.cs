@@ -53,7 +53,7 @@ namespace SocialBrothers.Controllers
                 GeoCoordinate pin2 = new GeoCoordinate(location2.Lat, location2.Lon);
 
                 double distanceBetween = pin1.GetDistanceTo(pin2);
-
+                Console.WriteLine(distanceBetween);
                 return (distanceBetween);
             }
 
