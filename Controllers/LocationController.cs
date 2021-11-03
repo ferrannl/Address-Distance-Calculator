@@ -35,7 +35,7 @@ namespace SocialBrothers.Controllers
         // GET: api/location/{id_location1}/{id_location2}
         [HttpGet]
         [Route("{id1}/{id2}")]
-        public async Task<double> GetDistance(int id1, int id2)
+        public async Task<string> GetDistance(int id1, int id2)
         {
 
             var loc1 = await _context.Adresses.FindAsync(id1);
@@ -45,7 +45,7 @@ namespace SocialBrothers.Controllers
             //get distance between these two locations
             if ((location1.Lat == location2.Lat) && (location1.Lon == location2.Lon))
             {
-                return 0;
+                return "Same addresses / distance = 0";
             }
             else
             {
@@ -53,8 +53,8 @@ namespace SocialBrothers.Controllers
                 GeoCoordinate pin2 = new GeoCoordinate(location2.Lat, location2.Lon);
 
                 double distanceBetween = pin1.GetDistanceTo(pin2);
-                Console.WriteLine(distanceBetween);
-                return (distanceBetween);
+                Console.WriteLine(distanceBetween / 1000);
+                return ("Distance in km:" + distanceBetween / 1000);
             }
 
 
@@ -93,20 +93,22 @@ namespace SocialBrothers.Controllers
                         }
                     }
                 }
+                Console.WriteLine("Sorry, we only support Dutch addresses.");
                 return null;
+
             }
         }
-
-        public class Location
-        {
-            public Location(double lat, double lon)
-            {
-                Lat = lat;
-                Lon = lon;
-            }
-            public double Lat { get; }
-            public double Lon { get; }
-        }
-
     }
+
+    public class Location
+    {
+        public Location(double lat, double lon)
+        {
+            Lat = lat;
+            Lon = lon;
+        }
+        public double Lat { get; }
+        public double Lon { get; }
+    }
+
 }
