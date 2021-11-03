@@ -17,7 +17,7 @@ namespace SocialBrothers.Controllers
     {
 
         private readonly SocialBrothersContext _context;
-
+        double distance = 0;
         public LocationController(SocialBrothersContext context)
         {
             _context = context;
@@ -37,11 +37,11 @@ namespace SocialBrothers.Controllers
         [Route("{id1}/{id2}")]
         public async Task<double> GetDistance(int id1, int id2)
         {
-            double distance = 0;
+
             var loc1 = await _context.Adresses.FindAsync(id1);
             var loc2 = await _context.Adresses.FindAsync(id2);
-            Location location1 = await RunAsync(loc1.City);
-            Location location2 = await RunAsync(loc2.City);
+            Location location1 = await RunAsync(loc1.Zipcode);
+            Location location2 = await RunAsync(loc2.Zipcode);
             //get distance between these two locations
             if ((location1.Lat == location2.Lat) && (location1.Lon == location2.Lon))
             {
@@ -73,7 +73,8 @@ namespace SocialBrothers.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     //-----
-                    HttpResponseMessage response = await client.GetAsync("REST/v1/Locations/" + _addressLine + "/?o=json&key=" + bingkey);
+                    //vervang NL door variabele country omgezet naar NL, UK, US, etc.
+                    HttpResponseMessage response = await client.GetAsync("REST/v1/Locations/NL/" + _addressLine + "/?o=json&key=" + bingkey);
                     double lat = 0;
                     double lon = 0;
                     if (response.IsSuccessStatusCode)
