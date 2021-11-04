@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -23,6 +24,8 @@ namespace SocialBrothers.Controllers
 
         private readonly SocialBrothersContext _context;
 
+        public object _mapper { get; private set; }
+
         public AdressesController(SocialBrothersContext context)
         {
             _context = context;
@@ -32,8 +35,40 @@ namespace SocialBrothers.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Adress>>> GetAdresses()
         {
+            var city = HttpContext.Request.Query["city"].ToString();
+            string page = HttpContext.Request.Query["page"].ToString();
+            string streetname = HttpContext.Request.Query["streetname"].ToString();
+            string zipcode = HttpContext.Request.Query["zipcode"].ToString();
+            string housenumber = HttpContext.Request.Query["housenumber"].ToString();
+            int pageSize = 3;
+            int pageNumber = 1;
+            int id = -1;
 
-            return await _context.Adresses.ToListAsync();
+            try
+            {
+                id = Int32.Parse(HttpContext.Request.Query["id"].ToString());
+            }
+            catch (FormatException)
+            {
+                id = -1;
+            }
+            try
+            {
+                pageNumber = Int32.Parse(HttpContext.Request.Query["page"].ToString());
+            }
+            catch (FormatException)
+            {
+                pageNumber = 1;
+            }
+            try
+            {
+                pageSize = Int32.Parse(HttpContext.Request.Query["pageSize"].ToString());
+            }
+            catch (FormatException)
+            {
+                pageSize = 3;
+            }
+            return await _context.Adresses.Where(x => (city == "" || x.City == city)).Where(x => (streetname == "" || x.StreetName == streetname)).Where(x => (id == -1 || x.ID == id)).Where(x => (zipcode == "" || x.Zipcode == zipcode)).Where(x => (housenumber == "" || x.HouseNumber == housenumber)).Skip(((pageNumber - 1) * pageSize)).Take(pageSize).ToListAsync();
         }
 
         // GET: api/Adresses/5
@@ -97,6 +132,8 @@ namespace SocialBrothers.Controllers
             return "Sorry, your zipcode is empty or invalid. Make sure you use a Dutch zipcode [1234AB].";
         }
 
+
+
         // DELETE: api/Adresses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAdress(int id)
@@ -124,7 +161,7 @@ namespace SocialBrothers.Controllers
             {
                 string bingkey = "AsOwuPhU8FPK9TfxRKzV2wXAyywiAIM6fDnMlqNgTbQ-fWcUdVfZcr_FSkZGEeYv";
                 var _addressLine = addressLine;
-                if(addressLine == "")
+                if (addressLine == "")
                 {
                     return null;
                 }
