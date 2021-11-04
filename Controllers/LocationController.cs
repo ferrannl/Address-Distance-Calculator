@@ -22,16 +22,6 @@ namespace SocialBrothers.Controllers
         {
             _context = context;
         }
-
-        private double deg2rad(double deg)
-        {
-            return (deg * Math.PI / 180.0);
-        }
-
-        private double rad2deg(double rad)
-        {
-            return (rad / Math.PI * 180.0);
-        }
         // GET: api/location/{id_location1}/{id_location2}
         [HttpGet]
         [Route("{id1}/{id2}")]
