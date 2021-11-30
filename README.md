@@ -1,5 +1,3 @@
-SocialBrothers
-
 C# ASP.NET Web API 
 Create, Read, Update and Delete addresses.
 Calculate distance between Dutch addresses in kilometers.
